@@ -1,0 +1,139 @@
+/* styles/Wordle.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background-color: #f6f8fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #333;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 2rem;
+}
+
+.row {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.cell {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #dcdcdc;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: white;
+  transition: background-color 0.3s ease;
+}
+
+.green {
+  background-color: #6aaa64;
+  color: white;
+}
+
+.yellow {
+  background-color: #c9b458;
+  color: white;
+}
+
+.gray {
+  background-color: #787c7e;
+  color: white;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem; /* ✅ Add this */
+}
+
+.keyboardRow {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.75rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #fff;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+.input {
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 160px;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #303f9f;
+}
+
+.error {
+  color: red;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.win {
+  color: #4caf50;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.lose {
+  color: #f44336;
+  font-weight: bold;
+  margin-top: 1rem;
+}

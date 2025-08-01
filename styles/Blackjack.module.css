@@ -1,0 +1,105 @@
+.container {
+  background-color: #0b3d0b;
+  background-image: url('/textures/green_felt_texture.png');
+  background-size: cover;
+  background-repeat: repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+.title {
+  font-size: 3rem;
+  color: #ffcc00;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 2px black;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  color: #ffffff;
+}
+
+.hand {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #0f4d0f;
+  border-radius: 15px;
+  box-shadow: inset 0 0 10px #052805;
+}
+
+.message {
+  font-size: 1.3rem;
+  margin: 1rem 0;
+  color: #ffd700;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.button {
+  background-color: #006400;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #009900;
+  border-color: #ffd700;
+  color: #ffd700;
+}
+
+.backLink {
+  display: inline-block;
+  background-color: #222;
+  color: #ffd700;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 2px solid #ffd700;
+  transition: all 0.3s ease;
+}
+
+.backLink:hover {
+  background-color: #ffd700;
+  color: #222;
+}
+
+.backButton {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #004d00; /* deep green */
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 2px solid #ffffff33;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: #006600;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
