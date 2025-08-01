@@ -17,7 +17,7 @@ export default function Home() {
     {
       name: 'Blackjack',
       path: '/blackjack',
-      image: '/images/blackjack.jpg',
+      image: '/images/blackjack_logo.jpg',
     },
   ];
 
