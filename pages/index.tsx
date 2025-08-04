@@ -33,13 +33,15 @@ export default function Home() {
         {games.map((game) => (
           <Link href={game.path} key={game.name} className={styles.card}>
             <div className={styles.card}>
-              <Image
-                src={game.image}
-                alt={game.name}
-                layout="fill"
-                objectFit="cover"
-                className={styles.image}
-              />
+              <div className={styles.imageWrapper}>
+                <Image
+                  src={game.image}
+                  alt={game.name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className={styles.image}
+                />
+              </div>
               <div className={styles.overlay}>
                 <h2 className={styles.gameTitle}>{game.name}</h2>
               </div>
