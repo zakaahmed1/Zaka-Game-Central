@@ -23,6 +23,11 @@ export default function Home() {
       name: 'Guessing Game',
       path: '/guessing-game',
       image: '/images/guessing_game_logo.png',
+    },
+    {
+      name: 'Where in the World?',
+      path: '/where-in-the-world',
+      image: '/images/world_guess_logo.png'
     }
   ];
 
