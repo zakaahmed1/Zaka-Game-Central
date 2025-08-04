@@ -19,6 +19,11 @@ export default function Home() {
       path: '/blackjack',
       image: '/images/blackjack_logo.png',
     },
+    {
+      name: 'Guessing Game',
+      path: '/guessing-game',
+      image: '/images/guessing_game_logo.png',
+    }
   ];
 
   return (
