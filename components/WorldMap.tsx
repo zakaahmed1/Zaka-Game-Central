@@ -34,7 +34,8 @@ export default function WorldMap({ guessCoords }: Props) {
         className={styles.map}
       >
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
         {guessCoords && <FlyToLocation coords={guessCoords} />}
       </MapContainer>

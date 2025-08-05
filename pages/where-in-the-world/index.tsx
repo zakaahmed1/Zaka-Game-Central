@@ -12,6 +12,7 @@ export default function WhereInTheWorld() {
   const [guess, setGuess] = useState('');
   const [feedback, setFeedback] = useState('');
   const [guessCoords, setGuessCoords] = useState<[number, number] | null>(null);
+  const [isCorrectGuess, setIsCorrectGuess] = useState(false);
 
   useEffect(() => {
     const random = countriesData[Math.floor(Math.random() * countriesData.length)];
@@ -50,6 +51,12 @@ export default function WhereInTheWorld() {
     const coords: [number, number] = [guessed.lat, guessed.lng];
     setGuessCoords(coords);
 
+    if (guessed.name === targetCountry.name) {
+      setIsCorrectGuess(true);
+      setFeedback('🎉 Congratulations, you have guessed the correct country!');
+      return;
+    }
+
     const correctContinent = guessed.continent === targetCountry.continent;
     const distance = Math.round(
       haversineDistance(
@@ -67,6 +74,15 @@ export default function WhereInTheWorld() {
 
     setFeedback(`${continentMsg} ${distanceMsg}`);
     setGuess('');
+  };
+
+  const handlePlayAgain = () => {
+    const random = countriesData[Math.floor(Math.random() * countriesData.length)];
+    setTargetCountry(random);
+    setGuess('');
+    setGuessCoords(null);
+    setFeedback('');
+    setIsCorrectGuess(false);
   };
 
   return (
@@ -88,6 +104,12 @@ export default function WhereInTheWorld() {
       </div>
 
       <p className={styles.feedback}>{feedback}</p>
+
+      {isCorrectGuess && (
+        <button onClick={handlePlayAgain} className={styles.button}>
+          Play Again
+        </button>
+      )}
 
       <WorldMap guessCoords={guessCoords} />
     </div>
