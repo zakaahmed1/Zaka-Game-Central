@@ -32,6 +32,23 @@ export default function Wordle() {
     setKeyboard(Object.fromEntries('abcdefghijklmnopqrstuvwxyz'.split('').map(l => [l, ''])));
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (gameover) return;
+
+      if (e.key === 'Enter') {
+        handleSubmit();
+      } else if (e.key === 'Backspace') {
+        setInput(prev => prev.slice(0, -1));
+      } else if (/^[a-zA-Z]$/.test(e.key) && input.length < WORD_LENGTH) {
+        setInput(prev => prev + e.key.toLowerCase());
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [input, gameover]);
+
   const handleSubmit = () => {
     const guess = input.toLowerCase();
     if (guess.length !== WORD_LENGTH || !wordList.includes(guess)) {
@@ -63,7 +80,7 @@ export default function Wordle() {
       handleSubmit();
     } else if (key === 'Backspace') {
       setInput(prev => prev.slice(0, -1));
-    } else if (input.length < WORD_LENGTH && /^[a-z]$/i.test(key)) {
+    } else if (/^[a-z]$/.test(key) && input.length < WORD_LENGTH) {
       setInput(prev => prev + key);
     }
   };
@@ -71,7 +88,7 @@ export default function Wordle() {
   const keyboardRows = [
     'qwertyuiop'.split(''),
     'asdfghjkl'.split(''),
-    ['Enter', ...'zxcvbnm'.split(''), 'Backspace'],
+    ['Enter', ...'zxcvbnm'.split(''), 'Backspace']
   ];
 
   return (
@@ -107,7 +124,7 @@ export default function Wordle() {
               className={styles.input}
               value={input}
               maxLength={WORD_LENGTH}
-              onChange={e => setInput(e.target.value)}
+              onChange={e => setInput(e.target.value.toLowerCase())}
               onKeyDown={e => {
                 if (e.key === 'Enter') handleSubmit();
               }}
@@ -126,11 +143,16 @@ export default function Wordle() {
             {row.map((key) => (
               <button
                 key={key}
-                className={`${styles.key} ${styles[keyboard[key.toLowerCase()] || '']}`}
+                className={`${styles.key} ${key === 'Enter' || key === 'Backspace' ? styles.wideKey : ''
+                  }`}
                 onClick={() => handleKeyClick(key.toLowerCase())}
-                disabled={keyboard[key.toLowerCase()] === 'green' || gameover}
+                disabled={
+                  keyboard[key.toLowerCase()] &&
+                  key !== 'Enter' &&
+                  key !== 'Backspace'
+                }
               >
-                {key === 'Backspace' ? '⌫' : key.toUpperCase()}
+                {key === 'Backspace' ? 'UNDO' : key.toUpperCase()}
               </button>
             ))}
           </div>

@@ -137,3 +137,7 @@
   font-weight: bold;
   margin-top: 1rem;
 }
+
+.wideKey {
+  width: 80px;
+}
