@@ -11,29 +11,30 @@ export default function FlagBattle() {
   const [guess, setGuess] = useState('');
   const [message, setMessage] = useState('');
   const [gameOver, setGameOver] = useState(false);
+  const [setupComplete, setSetupComplete] = useState(false);
+  const [playerNames, setPlayerNames] = useState({ p1: '', p2: '' });
 
   const renderLives = (lives: number) => {
-    return (
-      <span className={styles.lives}>
-        {'X'.repeat(lives)}
-      </span>
-    );
+    return <span className={styles.lives}>{'X'.repeat(lives)}</span>;
   };
 
   const handleGuess = () => {
     if (gameOver) return;
 
-    const isCorrect = guess.trim().toLowerCase() === currentFlag.name.toLowerCase();
+    const isCorrect = currentFlag.name.some(
+  (name) => name.toLowerCase() === guess.trim().toLowerCase()
+);
 
     if (isCorrect) {
-      setMessage(`✅ Correct! ${currentPlayer === 'p1' ? 'Player 1' : 'Player 2'} scores!`);
+      setMessage(`✅ Correct! ${playerNames[currentPlayer]} scores!`);
     } else {
       const newLives = { ...playerLives };
       newLives[currentPlayer] -= 1;
       setPlayerLives(newLives);
 
       if (newLives[currentPlayer] === 0) {
-        setMessage(`❌ Wrong! Player ${currentPlayer === 'p1' ? '1' : '2'} is out! Player ${currentPlayer === 'p1' ? '2' : '1'} wins!`);
+        const winner = currentPlayer === 'p1' ? playerNames.p2 : playerNames.p1;
+        setMessage(`❌ Wrong! ${playerNames[currentPlayer]} is out! ${winner} wins!`);
         setGameOver(true);
         return;
       } else {
@@ -61,12 +62,41 @@ export default function FlagBattle() {
     setGameOver(false);
   };
 
+  const handleSetupSubmit = () => {
+    if (playerNames.p1.trim() && playerNames.p2.trim()) {
+      setSetupComplete(true);
+    }
+  };
+
+  if (!setupComplete) {
+    return (
+      <div className={styles.container}>
+        <h1 className={styles.title}>Enter Player Names</h1>
+        <input
+          type="text"
+          placeholder="Player 1 Name"
+          value={playerNames.p1}
+          onChange={(e) => setPlayerNames({ ...playerNames, p1: e.target.value })}
+          className={styles.input}
+        />
+        <input
+          type="text"
+          placeholder="Player 2 Name"
+          value={playerNames.p2}
+          onChange={(e) => setPlayerNames({ ...playerNames, p2: e.target.value })}
+          className={styles.input}
+        />
+        <button onClick={handleSetupSubmit} className={styles.button}>Start Game</button>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Flag Battle</h1>
       <div className={styles.scoreboard}>
-        <span>Player 1 {renderLives(playerLives.p1)}</span>
-        <span>Player 2 {renderLives(playerLives.p2)}</span>
+        <span>{playerNames.p1} {renderLives(playerLives.p1)}</span>
+        <span>{playerNames.p2} {renderLives(playerLives.p2)}</span>
       </div>
       <img
         src={currentFlag.flagUrl}
@@ -74,7 +104,7 @@ export default function FlagBattle() {
         className={styles.flag}
       />
       <p className={styles.turn}>
-        {gameOver ? 'Game Over' : `${currentPlayer === 'p1' ? 'Player 1' : 'Player 2'}'s Turn`}
+        {gameOver ? 'Game Over' : `${playerNames[currentPlayer]}'s Turn`}
       </p>
       {!gameOver && (
         <>
