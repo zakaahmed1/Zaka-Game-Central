@@ -28,6 +28,11 @@ export default function Home() {
       name: 'Where in the World?',
       path: '/where-in-the-world',
       image: '/images/world_guess_logo.png'
+    },
+    {
+      name: 'Flag Battle',
+      path: '/flag-battle',
+      image: '/images/flag_battle_logo.png'
     }
   ];
 
