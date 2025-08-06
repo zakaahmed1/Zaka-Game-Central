@@ -70,6 +70,11 @@ export default function GuessingGame() {
                                 type="number"
                                 value={guess}
                                 onChange={(e) => setGuess(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleGuess();
+                                    }
+                                }}
                                 className={styles.input}
                             />
                             <button onClick={handleGuess} className={styles.button}>

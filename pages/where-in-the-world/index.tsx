@@ -96,6 +96,11 @@ export default function WhereInTheWorld() {
           placeholder="Enter a country"
           value={guess}
           onChange={(e) => setGuess(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleGuess();
+            }
+          }}
           className={styles.input}
         />
         <button onClick={handleGuess} className={styles.button}>

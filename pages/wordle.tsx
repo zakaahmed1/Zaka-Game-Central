@@ -38,12 +38,14 @@ export default function Wordle() {
       setError('Invalid guess.');
       return;
     }
+
     setError('');
     const result = evaluateGuess(guess, answer);
     setFeedback(prev => [...prev, result]);
     setGuesses(prev => [...prev, guess]);
     setKeyboard(prev => updateKeyboard({ ...prev }, result));
     setInput('');
+
     if (result.every(([color]) => color === 'green')) {
       setGameover(true);
       setWon(true);
@@ -54,10 +56,22 @@ export default function Wordle() {
 
   const handleReset = () => window.location.reload();
 
+  const handleKeyClick = (key: string) => {
+    if (gameover) return;
+
+    if (key === 'Enter') {
+      handleSubmit();
+    } else if (key === 'Backspace') {
+      setInput(prev => prev.slice(0, -1));
+    } else if (input.length < WORD_LENGTH && /^[a-z]$/i.test(key)) {
+      setInput(prev => prev + key);
+    }
+  };
+
   const keyboardRows = [
     'qwertyuiop'.split(''),
     'asdfghjkl'.split(''),
-    'zxcvbnm'.split(''),
+    ['Enter', ...'zxcvbnm'.split(''), 'Backspace'],
   ];
 
   return (
@@ -109,13 +123,15 @@ export default function Wordle() {
       <div className={styles.keyboard}>
         {keyboardRows.map((row, i) => (
           <div key={i} className={styles.keyboardRow}>
-            {row.map((letter) => (
-              <span
-                key={letter}
-                className={`${styles.key} ${styles[keyboard[letter]]}`}
+            {row.map((key) => (
+              <button
+                key={key}
+                className={`${styles.key} ${styles[keyboard[key.toLowerCase()] || '']}`}
+                onClick={() => handleKeyClick(key.toLowerCase())}
+                disabled={keyboard[key.toLowerCase()] === 'green' || gameover}
               >
-                {letter.toUpperCase()}
-              </span>
+                {key === 'Backspace' ? '⌫' : key.toUpperCase()}
+              </button>
             ))}
           </div>
         ))}
@@ -123,7 +139,6 @@ export default function Wordle() {
 
       <button className={styles.button} onClick={handleReset}>Reset</button>
 
-      {/* Moved BACK button below other buttons */}
       <Link href="/" legacyBehavior>
         <a
           style={{
