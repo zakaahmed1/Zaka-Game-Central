@@ -45,6 +45,7 @@
   border-radius: 12px;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat; /* prevent tiling */
   min-height: 450px;
   display: flex;
   justify-content: center;
@@ -166,10 +167,58 @@
   font-size: 0.95rem;
 }
 
+/* Option A fix: use background-color instead of background shorthand
+   so we don't reset background-size/position/repeat */
 .left {
-  background: linear-gradient(135deg, #37474f, #263238);
+  background-color: #1b2228; /* fallback gradient tone for no image */
 }
 
 .right {
-  background: linear-gradient(135deg, #4e342e, #3e2723);
+  background-color: #1f1716; /* fallback gradient tone for no image */
+}
+
+.gameOverScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #1a1c20;
+  border-radius: 12px;
+  padding: 2rem;
+  min-height: 300px;
+  width: 100%;
+  max-width: 500px;
+  margin-top: 4rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.gameOverScreen h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #ff5252;
+}
+
+.gameOverScreen p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+}
+
+.gameOverScreen button {
+  border: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background-color: #3f51b5;
+  color: white;
+}
+
+.gameOverScreen button:hover {
+  background-color: #303f9f;
+  box-shadow: 0 0 15px rgba(63, 81, 181, 0.8);
 }
