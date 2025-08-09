@@ -33,6 +33,11 @@ export default function Home() {
       name: 'Flag Battle',
       path: '/flag-battle',
       image: '/images/flag_battle_logo.png'
+    },
+    {
+      name: 'Higher or Lower',
+      path: '/higher_lower',
+      image: '/images/higher_lower_logo.png'
     }
   ];
 
