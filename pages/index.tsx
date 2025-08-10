@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
+import path from 'path';
 
 export default function Home() {
   const games = [
@@ -38,6 +39,11 @@ export default function Home() {
       name: 'Higher or Lower',
       path: '/higher_lower',
       image: '/images/higher_lower_logo.png'
+    },
+    {
+      name: 'Tic Tac Toe',
+      path: '/tic_tac_toe',
+      image: '/images/tic_tac_toe_logo.png'
     }
   ];
 
