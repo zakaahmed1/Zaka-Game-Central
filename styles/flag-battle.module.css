@@ -7,6 +7,7 @@
 .title {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
+  color: white;
 }
 
 .scoreboard {
@@ -14,6 +15,7 @@
   justify-content: space-around;
   margin-bottom: 1rem;
   font-size: 1.2rem;
+  color: white;
 }
 
 .flag {
@@ -55,6 +57,7 @@
   margin-top: 1rem;
   font-weight: bold;
   font-size: 1.1rem;
+  color: white;
 }
 
 .lives {
