@@ -136,7 +136,7 @@ export default function HigherLower() {
                 </button>
               </div>
 
-              <p className={styles.subtext}>followers than {a.name}</p>
+              <p className={styles.subtext}>Instagram followers than {a.name}</p>
               <p className={styles.desc}>
                 {b.description} • {b.country}
               </p>

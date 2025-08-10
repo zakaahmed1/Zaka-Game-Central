@@ -6,14 +6,14 @@ type Game = { name: string; path: string; image: string };
 
 export default function Home() {
   const games: Game[] = [
-    { name: "Love Score Calculator", path: "/love-score", image: "/images/love_score_logo.png" },
-    { name: "Wordle", path: "/wordle", image: "/images/wordle_game_logo.png" },
-    { name: "Blackjack", path: "/blackjack", image: "/images/blackjack_logo.png" },
-    { name: "Guessing Game", path: "/guessing-game", image: "/images/guessing_game_logo.png" },
-    { name: "Where in the World?", path: "/where-in-the-world", image: "/images/world_guess_logo.png" },
-    { name: "Flag Battle", path: "/flag-battle", image: "/images/flag_battle_logo.png" },
-    { name: "Higher or Lower", path: "/higher_lower", image: "/images/higher_lower_logo.png" },
-    { name: "Tic Tac Toe", path: "/tic_tac_toe", image: "/images/tic_tac_toe_logo.png" },
+    { name: "Love Score Calculator", path: "/love-score", image: "/images/logos/love_score_logo.png" },
+    { name: "Wordle", path: "/wordle", image: "/images/logos/wordle_game_logo.png" },
+    { name: "Blackjack", path: "/blackjack", image: "/images/logos/blackjack_logo.png" },
+    { name: "Guessing Game", path: "/guessing-game", image: "/images/logos/guessing_game_logo.png" },
+    { name: "Where in the World?", path: "/where-in-the-world", image: "/images/logos/world_guess_logo.png" },
+    { name: "Flag Battle", path: "/flag-battle", image: "/images/logos/flag_battle_logo.png" },
+    { name: "Higher or Lower", path: "/higher_lower", image: "/images/logos/higher_lower_logo.png" },
+    { name: "Tic Tac Toe", path: "/tic_tac_toe", image: "/images/logos/tic_tac_toe_logo.png" },
   ];
 
   return (
