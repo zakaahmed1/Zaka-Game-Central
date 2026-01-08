@@ -4,14 +4,14 @@ import styles from "../styles/Queens.module.css";
 const BOARD_SIZE = 8;
 const TOTAL_CELLS = BOARD_SIZE * BOARD_SIZE;
 const REGION_MAP = [
-  0, 0, 0, 0, 1, 1, 1, 1,
-  0, 0, 0, 0, 1, 1, 1, 1,
-  2, 2, 2, 2, 3, 3, 3, 3,
-  2, 2, 2, 2, 3, 3, 3, 3,
-  4, 4, 4, 4, 5, 5, 5, 5,
-  4, 4, 4, 4, 5, 5, 5, 5,
-  6, 6, 6, 6, 7, 7, 7, 7,
-  6, 6, 6, 6, 7, 7, 7, 7,
+  0, 0, 1, 1, 2, 2, 2, 3,
+  0, 0, 1, 1, 2, 3, 2, 3,
+  0, 1, 1, 1, 2, 3, 3, 3,
+  0, 0, 0, 1, 2, 2, 3, 3,
+  4, 4, 4, 5, 6, 6, 7, 7,
+  4, 5, 4, 5, 6, 7, 7, 7,
+  4, 5, 5, 5, 6, 6, 6, 7,
+  4, 4, 5, 5, 6, 6, 7, 7,
 ];
 const REGION_COLORS = [
   "#f5d6b2",
@@ -58,8 +58,8 @@ export default function Queens() {
     const rows: number[][] = Array.from({ length: BOARD_SIZE }, () => []);
     const cols: number[][] = Array.from({ length: BOARD_SIZE }, () => []);
     const regions: number[][] = Array.from({ length: BOARD_SIZE }, () => []);
-    const diagA = new Map<number, number[]>();
-    const diagB = new Map<number, number[]>();
+    const positions: number[] = [];
+    const positionSet = new Set<number>();
 
     board.forEach((hasQueen, index) => {
       if (!hasQueen) return;
@@ -70,11 +70,8 @@ export default function Queens() {
       rows[row].push(index);
       cols[col].push(index);
       regions[region].push(index);
-
-      const keyA = row - col;
-      const keyB = row + col;
-      diagA.set(keyA, [...(diagA.get(keyA) ?? []), index]);
-      diagB.set(keyB, [...(diagB.get(keyB) ?? []), index]);
+      positions.push(index);
+      positionSet.add(index);
     });
 
     const conflicts = new Set<number>();
@@ -87,8 +84,26 @@ export default function Queens() {
     rows.forEach(markConflicts);
     cols.forEach(markConflicts);
     regions.forEach(markConflicts);
-    diagA.forEach(markConflicts);
-    diagB.forEach(markConflicts);
+
+    positions.forEach((index) => {
+      const row = getRow(index);
+      const col = getCol(index);
+      const diagonals = [
+        [row - 1, col - 1],
+        [row - 1, col + 1],
+        [row + 1, col - 1],
+        [row + 1, col + 1],
+      ];
+
+      diagonals.forEach(([r, c]) => {
+        if (r < 0 || r >= BOARD_SIZE || c < 0 || c >= BOARD_SIZE) return;
+        const neighborIndex = r * BOARD_SIZE + c;
+        if (positionSet.has(neighborIndex)) {
+          conflicts.add(index);
+          conflicts.add(neighborIndex);
+        }
+      });
+    });
 
     return {
       conflictSet: conflicts,
@@ -153,15 +168,17 @@ export default function Queens() {
           Conflicting queens: <strong>{conflictSet.size}</strong>
         </div>
         <div className={styles.statusItem}>
-          {isSolved ? "Puzzle solved!" : "Queens cannot share diagonals."}
+          {isSolved
+            ? "Puzzle solved!"
+            : "Queens cannot touch diagonally."}
         </div>
       </section>
 
       <section className={styles.rules} aria-label="Rules">
         <h2 className={styles.rulesTitle}>Rules</h2>
         <p className={styles.rulesText}>
-          Place one queen in each row, column, and colored region. Queens must
-          not attack each other diagonally.
+          Place one queen in each row, column, and colored region. Queens may
+          share long diagonals, but cannot touch diagonally.
         </p>
       </section>
 
