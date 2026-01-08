@@ -3,6 +3,36 @@ import styles from "../styles/Queens.module.css";
 
 const BOARD_SIZE = 8;
 const TOTAL_CELLS = BOARD_SIZE * BOARD_SIZE;
+const REGION_MAP = [
+  0, 0, 0, 0, 1, 1, 1, 1,
+  0, 0, 0, 0, 1, 1, 1, 1,
+  2, 2, 2, 2, 3, 3, 3, 3,
+  2, 2, 2, 2, 3, 3, 3, 3,
+  4, 4, 4, 4, 5, 5, 5, 5,
+  4, 4, 4, 4, 5, 5, 5, 5,
+  6, 6, 6, 6, 7, 7, 7, 7,
+  6, 6, 6, 6, 7, 7, 7, 7,
+];
+const REGION_COLORS = [
+  "#f5d6b2",
+  "#caa36b",
+  "#e9c99a",
+  "#a98352",
+  "#f0dbc0",
+  "#b8895b",
+  "#e3c49b",
+  "#956c3f",
+];
+const REGION_TEXT = [
+  "#2a1c11",
+  "#1f140b",
+  "#2a1c11",
+  "#f6e7cf",
+  "#2a1c11",
+  "#f6e7cf",
+  "#2a1c11",
+  "#f6e7cf",
+];
 
 function getRow(index: number) {
   return Math.floor(index / BOARD_SIZE);
@@ -12,19 +42,6 @@ function getCol(index: number) {
   return index % BOARD_SIZE;
 }
 
-function areConflicting(a: number, b: number) {
-  const rowA = getRow(a);
-  const colA = getCol(a);
-  const rowB = getRow(b);
-  const colB = getCol(b);
-
-  const sameRow = rowA === rowB;
-  const sameCol = colA === colB;
-  const sameDiag = Math.abs(rowA - rowB) === Math.abs(colA - colB);
-
-  return sameRow || sameCol || sameDiag;
-}
-
 export default function Queens() {
   const [board, setBoard] = useState<boolean[]>(
     Array(TOTAL_CELLS).fill(false),
@@ -32,28 +49,61 @@ export default function Queens() {
 
   const queenCount = board.reduce((sum, cell) => sum + (cell ? 1 : 0), 0);
 
-  const { conflictSet, conflictPairs } = useMemo(() => {
-    const positions: number[] = [];
+  const {
+    conflictSet,
+    rowsWithOne,
+    colsWithOne,
+    regionsWithOne,
+  } = useMemo(() => {
+    const rows: number[][] = Array.from({ length: BOARD_SIZE }, () => []);
+    const cols: number[][] = Array.from({ length: BOARD_SIZE }, () => []);
+    const regions: number[][] = Array.from({ length: BOARD_SIZE }, () => []);
+    const diagA = new Map<number, number[]>();
+    const diagB = new Map<number, number[]>();
+
     board.forEach((hasQueen, index) => {
-      if (hasQueen) positions.push(index);
+      if (!hasQueen) return;
+      const row = getRow(index);
+      const col = getCol(index);
+      const region = REGION_MAP[index];
+
+      rows[row].push(index);
+      cols[col].push(index);
+      regions[region].push(index);
+
+      const keyA = row - col;
+      const keyB = row + col;
+      diagA.set(keyA, [...(diagA.get(keyA) ?? []), index]);
+      diagB.set(keyB, [...(diagB.get(keyB) ?? []), index]);
     });
 
     const conflicts = new Set<number>();
-    let pairs = 0;
-    for (let i = 0; i < positions.length; i += 1) {
-      for (let j = i + 1; j < positions.length; j += 1) {
-        if (areConflicting(positions[i], positions[j])) {
-          conflicts.add(positions[i]);
-          conflicts.add(positions[j]);
-          pairs += 1;
-        }
+    const markConflicts = (group: number[]) => {
+      if (group.length > 1) {
+        group.forEach((pos) => conflicts.add(pos));
       }
-    }
+    };
 
-    return { conflictSet: conflicts, conflictPairs: pairs };
+    rows.forEach(markConflicts);
+    cols.forEach(markConflicts);
+    regions.forEach(markConflicts);
+    diagA.forEach(markConflicts);
+    diagB.forEach(markConflicts);
+
+    return {
+      conflictSet: conflicts,
+      rowsWithOne: rows.filter((row) => row.length === 1).length,
+      colsWithOne: cols.filter((col) => col.length === 1).length,
+      regionsWithOne: regions.filter((region) => region.length === 1).length,
+    };
   }, [board]);
 
-  const isSolved = queenCount === BOARD_SIZE && conflictSet.size === 0;
+  const isSolved =
+    queenCount === BOARD_SIZE &&
+    rowsWithOne === BOARD_SIZE &&
+    colsWithOne === BOARD_SIZE &&
+    regionsWithOne === BOARD_SIZE &&
+    conflictSet.size === 0;
 
   function toggleQueen(index: number) {
     setBoard((prev) => {
@@ -82,7 +132,7 @@ export default function Queens() {
       <header className={styles.header}>
         <h1 className={styles.title}>Queens</h1>
         <p className={styles.subtitle}>
-          Place 8 queens so none share a row, column, or diagonal.
+          Place 8 queens so each row, column, and region has exactly one.
         </p>
       </header>
 
@@ -91,30 +141,52 @@ export default function Queens() {
           Queens placed: <strong>{queenCount}</strong> / {BOARD_SIZE}
         </div>
         <div className={styles.statusItem}>
-          Conflicts: <strong>{conflictPairs}</strong>
+          Rows complete: <strong>{rowsWithOne}</strong> / {BOARD_SIZE}
         </div>
         <div className={styles.statusItem}>
-          {isSolved ? "Puzzle solved!" : "Keep going."}
+          Columns complete: <strong>{colsWithOne}</strong> / {BOARD_SIZE}
         </div>
+        <div className={styles.statusItem}>
+          Regions complete: <strong>{regionsWithOne}</strong> / {BOARD_SIZE}
+        </div>
+        <div className={styles.statusItem}>
+          Conflicting queens: <strong>{conflictSet.size}</strong>
+        </div>
+        <div className={styles.statusItem}>
+          {isSolved ? "Puzzle solved!" : "Queens cannot share diagonals."}
+        </div>
+      </section>
+
+      <section className={styles.rules} aria-label="Rules">
+        <h2 className={styles.rulesTitle}>Rules</h2>
+        <p className={styles.rulesText}>
+          Place one queen in each row, column, and colored region. Queens must
+          not attack each other diagonally.
+        </p>
       </section>
 
       <section className={styles.board} aria-label="Queens board">
         {board.map((hasQueen, index) => {
           const row = getRow(index);
           const col = getCol(index);
-          const isDark = (row + col) % 2 === 1;
+          const region = REGION_MAP[index];
           const isConflict = conflictSet.has(index);
 
           return (
             <button
               key={index}
               type="button"
-              className={`${styles.cell} ${isDark ? styles.dark : styles.light} ${
-                isConflict ? styles.conflict : ""
-              }`}
+              className={`${styles.cell} ${isConflict ? styles.conflict : ""}`}
               onClick={() => toggleQueen(index)}
               aria-pressed={hasQueen}
-              aria-label={`Row ${row + 1}, Column ${col + 1}`}
+              aria-label={`Row ${row + 1}, Column ${col + 1}, Region ${
+                region + 1
+              }`}
+              disabled={!hasQueen && queenCount >= BOARD_SIZE}
+              style={{
+                backgroundColor: REGION_COLORS[region],
+                color: REGION_TEXT[region],
+              }}
             >
               {hasQueen ? "Q" : ""}
             </button>
