@@ -14,6 +14,7 @@ export default function Home() {
     { name: "Flag Battle", path: "/flag-battle", image: "/images/logos/flag_battle_logo.png" },
     { name: "Higher or Lower", path: "/higher_lower", image: "/images/logos/higher_lower_logo.png" },
     { name: "Tic Tac Toe", path: "/tic_tac_toe", image: "/images/logos/tic_tac_toe_logo.png" },
+    { name: "Queens", path: "/queens", image: "/images/logos/queens_logo.svg" },
   ];
 
   return (

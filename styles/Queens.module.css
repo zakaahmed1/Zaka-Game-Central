@@ -1,0 +1,122 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2.5rem 1.5rem 3rem;
+  background: radial-gradient(circle at top, #f5e6cc 0%, #d1b48c 45%, #6d5436 100%);
+  color: #241a10;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.statusPanel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.2rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(36, 26, 16, 0.2);
+  margin-bottom: 1.8rem;
+}
+
+.statusItem {
+  font-size: 1rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(34px, 64px));
+  grid-auto-rows: minmax(34px, 64px);
+  gap: 6px;
+  padding: 1rem;
+  border-radius: 22px;
+  background: rgba(36, 26, 16, 0.2);
+  box-shadow: inset 0 0 0 2px rgba(36, 26, 16, 0.2),
+    0 18px 35px rgba(36, 26, 16, 0.35);
+}
+
+.cell {
+  border: none;
+  border-radius: 12px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #241a10;
+}
+
+.cell:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(36, 26, 16, 0.25);
+}
+
+.light {
+  background: #f6e7cf;
+}
+
+.dark {
+  background: #b58a5a;
+  color: #1f140b;
+}
+
+.conflict {
+  outline: 3px solid #b02d2d;
+  box-shadow: 0 0 0 2px rgba(176, 45, 45, 0.45);
+}
+
+.controls {
+  margin-top: 1.8rem;
+}
+
+.button {
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+  background: #241a10;
+  color: #f6e7cf;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(36, 26, 16, 0.35);
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.3rem;
+  }
+
+  .board {
+    gap: 4px;
+    padding: 0.7rem;
+  }
+}

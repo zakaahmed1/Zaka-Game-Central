@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Queens logo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3e2c6"/>
+      <stop offset="100%" stop-color="#8b6b45"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <rect x="96" y="120" width="320" height="220" rx="28" fill="#2a1c11" opacity="0.15"/>
+  <path d="M132 300 L176 200 L236 255 L256 180 L276 255 L336 200 L380 300 Z" fill="#3b2414"/>
+  <rect x="140" y="300" width="232" height="44" rx="12" fill="#3b2414"/>
+  <circle cx="176" cy="196" r="16" fill="#d8b57a"/>
+  <circle cx="256" cy="172" r="16" fill="#d8b57a"/>
+  <circle cx="336" cy="196" r="16" fill="#d8b57a"/>
+  <text x="256" y="400" text-anchor="middle" font-family="Palatino Linotype, Book Antiqua, Palatino, serif" font-size="56" fill="#2a1c11" letter-spacing="6">QUEENS</text>
+</svg>
