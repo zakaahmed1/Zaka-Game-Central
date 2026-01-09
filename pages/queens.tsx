@@ -14,24 +14,24 @@ const REGION_MAP = [
   4, 4, 5, 5, 6, 6, 7, 7,
 ];
 const REGION_COLORS = [
-  "#f5d6b2",
-  "#caa36b",
-  "#e9c99a",
-  "#a98352",
-  "#f0dbc0",
-  "#b8895b",
-  "#e3c49b",
-  "#956c3f",
+  "#7b3fa1", // Purple
+  "#d84242", // Red
+  "#2f6ed6", // Blue
+  "#f28a2b", // Orange
+  "#f5d847", // Yellow
+  "#3ea65b", // Green
+  "#8a5a3b", // Brown
+  "#d4d7dd", // Light Grey
 ];
 const REGION_TEXT = [
+  "#f8f3ff",
+  "#fff4f4",
+  "#eef5ff",
   "#2a1c11",
-  "#1f140b",
   "#2a1c11",
-  "#f6e7cf",
+  "#f4fff7",
+  "#f7efe8",
   "#2a1c11",
-  "#f6e7cf",
-  "#2a1c11",
-  "#f6e7cf",
 ];
 
 function getRow(index: number) {
